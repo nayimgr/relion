@@ -25,7 +25,6 @@
 
 #ifdef ALTCPU
 	#include <tbb/enumerable_thread_specific.h>
-	#include <tbb/task_scheduler_init.h>
 	#include <complex>
 #endif
 
@@ -113,7 +112,6 @@ public:
 	typedef tbb::enumerable_thread_specific< void * > CpuOptimiserType;
 
 	CpuOptimiserType   tbbCpuOptimiser;
-	tbb::task_scheduler_init tbbSchedulerInit;
 
 	std::complex<XFLOAT> **mdlClassComplex __attribute__((aligned(64)));
 #endif
@@ -409,7 +407,7 @@ public:
 	// Which GPU devices to use?
 	std::string gpu_ids;
 
-	// Or preread all images into RAM on the master node?
+	// Or preread all images into RAM on the leader node?
 	bool do_preread_images;
 
 	// Place on scratch disk to copy particle stacks temporarily
@@ -764,7 +762,6 @@ public:
 		maximum_significants(-1),
 		threadException(NULL),
 #ifdef ALTCPU
-		tbbSchedulerInit(tbb::task_scheduler_init::deferred ),
 		mdlClassComplex(NULL),
 #endif
 		failsafe_threshold(40),
@@ -839,7 +836,7 @@ public:
 	 */
 	void expectation();
 
-	/* Setup expectation step. We divide the heavy steps over mpi-slaves,
+	/* Setup expectation step. We divide the heavy steps over mpi-followers,
 	 * so each call needs a list of which to skip heavy setup for. For
 	 * these classes, only some formatting is done. Data is copied
 	 * explicitly later.*/
