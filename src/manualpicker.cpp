@@ -738,7 +738,7 @@ void ManualPicker::initialise()
 		std::cout << " Set low-pass filter to " << global_lowpass << " due to downscaling of " << global_micscale << std::endl;
 	}
 
-	std::cerr << " NOTE: in order to write the new list of coordinate STAR files, you need to re-count the particles or quite this program through the File menu. Do NOT kill the program using the operating system's window manager!" << std::endl;
+	std::cerr << " NOTE: in order to write the new list of coordinate STAR files, you need to re-count the particles or quit this program through the File menu. Do NOT kill the program using the operating system's window manager!" << std::endl;
 
 
 }
